@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import "../styles/PhotoListItem.scss";
-
+import FavIcon from "./FavIcon";
 
 const PhotoListItem = (props) => {
   const { imageSource, profile, username, location } = props.data;
+
+  // State to track whether the photo is favorited
+  const [isFavorited, setIsFavorited] = useState(false);
+
+  // Function to toggle the favorite status
+  const toggleFavorite = () => {
+    setIsFavorited(!isFavorited);
+  };
 
   return (
     <div className="photo-item">
@@ -19,6 +27,10 @@ const PhotoListItem = (props) => {
           <span className="country">{location.country}</span>
         </div>
       </div>
+      <FavIcon
+        selected={isFavorited}
+        onClick={toggleFavorite} // Pass the toggleFavorite function as onClick handler
+      />
     </div>
   );
 };
@@ -36,3 +48,4 @@ PhotoListItem.propTypes = {
 };
 
 export default PhotoListItem;
+
