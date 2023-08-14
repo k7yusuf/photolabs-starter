@@ -1,22 +1,26 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import "../styles/PhotoListItem.scss";
 import FavIcon from "./FavIcon";
+import { useFavContext } from './FavContext';
 
 const PhotoListItem = (props) => {
-  const { imageSource, profile, username, location } = props.data;
+  const { urls, profile, username, location } = props.data;
 
-  // State to track whether the photo is favorited
-  const [isFavorited, setIsFavorited] = useState(false);
+  // Access the context
+  const { likedPhotos, toggleLike } = useFavContext();
 
-  // Function to toggle the favorite status
+  // Check if the current photo is liked
+  const isPhotoLiked = likedPhotos.includes(props.data.id);
+
+  // Function to toggle the favorite status using the context
   const toggleFavorite = () => {
-    setIsFavorited(!isFavorited);
+    toggleLike(props.data.id);
   };
 
   return (
     <div className="photo-item">
-      <img src={imageSource} alt="Photo" className="photo-image" />
+      <img src={urls.regular} alt="Photo" className="photo-image" />
       <div className="photo-details">
         <div className="user-profile">
           <img src={profile} alt="Profile" className="profile-image" />
@@ -28,8 +32,8 @@ const PhotoListItem = (props) => {
         </div>
       </div>
       <FavIcon
-        selected={isFavorited}
-        onClick={toggleFavorite} // Pass the toggleFavorite function as onClick handler
+        selected={isPhotoLiked}
+        onClick={toggleFavorite}
       />
     </div>
   );
@@ -37,7 +41,10 @@ const PhotoListItem = (props) => {
 
 PhotoListItem.propTypes = {
   data: PropTypes.shape({
-    imageSource: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    urls: PropTypes.shape({
+      regular: PropTypes.string.isRequired,
+    }).isRequired,
     profile: PropTypes.string.isRequired,
     username: PropTypes.string.isRequired,
     location: PropTypes.shape({
@@ -48,4 +55,3 @@ PhotoListItem.propTypes = {
 };
 
 export default PhotoListItem;
-

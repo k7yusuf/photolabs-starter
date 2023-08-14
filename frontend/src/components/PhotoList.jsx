@@ -1,5 +1,6 @@
 import React from "react";
 import PhotoListItem from "./PhotoListItem"; // Import the PhotoListItem component
+import { useFavContext } from './FavContext'; // Import the useFavContext hook
 import "../styles/PhotoList.scss";
 
 const sampleDataForPhotoList = [
@@ -57,10 +58,13 @@ const sampleDataForPhotoList = [
 ];
 
 const PhotoList = () => {
+  // Access the context
+  const { likedPhotos } = useFavContext();
+
   return (
     <ul className="photo-list">
       {sampleDataForPhotoList.map(photo => (
-        <PhotoListItem key={photo.id} data={photo} /> // Render PhotoListItem component for each photo
+        <PhotoListItem key={photo.id} data={photo} likedPhotos={likedPhotos} /> // Pass likedPhotos to PhotoListItem
       ))}
     </ul>
   );
