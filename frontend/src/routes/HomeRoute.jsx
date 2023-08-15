@@ -7,6 +7,10 @@ import FavBadge from '../components/FavBadge'; // Import the FavBadge component
 import '../styles/HomeRoute.scss';
 
 const HomeRoute = () => {
+
+
+
+  
   return (
     <FavProvider> {/* Wrap the components with the FavProvider */}
       <div className="home-route">

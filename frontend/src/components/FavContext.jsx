@@ -1,24 +1,24 @@
 import React, { createContext, useContext, useState } from 'react';
 
-const FavContext = createContext();
+export const FavContext = createContext();
 
 export const useFavContext = () => {
   return useContext(FavContext);
 };
 
 export const FavProvider = ({ children }) => {
-  const [likedPhotos, setLikedPhotos] = useState([]);
+  const [favPhotos, setFavPhotos] = useState([]);
 
-  const toggleLike = (photoId) => {
-    if (likedPhotos.includes(photoId)) {
-      setLikedPhotos(likedPhotos.filter(id => id !== photoId));
+  const toggleFav = (photoId) => {
+    if (favPhotos.includes(photoId)) {
+      setFavPhotos(favPhotos.filter(id => id !== photoId));
     } else {
-      setLikedPhotos([...likedPhotos, photoId]);
+      setFavPhotos([...favPhotos, photoId]);
     }
   };
 
   return (
-    <FavContext.Provider value={{ likedPhotos, toggleLike }}>
+    <FavContext.Provider value={{ favPhotos, toggleFav }}>
       {children}
     </FavContext.Provider>
   );

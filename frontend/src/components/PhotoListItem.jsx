@@ -5,36 +5,28 @@ import FavIcon from "./FavIcon";
 import { useFavContext } from './FavContext';
 
 const PhotoListItem = (props) => {
-  const { urls, profile, username, location } = props.data;
+  const { urls, user, location } = props.data;
+  const { favPhotos } = props; 
 
-  // Access the context
-  const { likedPhotos, toggleLike } = useFavContext();
-
-  // Check if the current photo is liked
-  const isPhotoLiked = likedPhotos.includes(props.data.id);
-
-  // Function to toggle the favorite status using the context
+  const isPhotoLiked = favPhotos.includes(props.data.id); 
   const toggleFavorite = () => {
-    toggleLike(props.data.id);
+    props.toggleLike(props.data.id);
   };
 
   return (
-    <div className="photo-item">
+    <div className="photo-item" onClick={props.onClick}>
       <img src={urls.regular} alt="Photo" className="photo-image" />
       <div className="photo-details">
         <div className="user-profile">
-          <img src={profile} alt="Profile" className="profile-image" />
-          <span className="username">{username}</span>
+          <img src={user.profile} alt="Profile" className="profile-image" />
+          <span className="username">{user.username}</span>
         </div>
         <div className="location">
           <span className="city">{location.city},</span>
           <span className="country">{location.country}</span>
         </div>
       </div>
-      <FavIcon
-        selected={isPhotoLiked}
-        onClick={toggleFavorite}
-      />
+      <FavIcon selected={isPhotoLiked} onClick={toggleFavorite} />
     </div>
   );
 };
@@ -45,13 +37,18 @@ PhotoListItem.propTypes = {
     urls: PropTypes.shape({
       regular: PropTypes.string.isRequired,
     }).isRequired,
-    profile: PropTypes.string.isRequired,
-    username: PropTypes.string.isRequired,
+    user: PropTypes.shape({
+      profile: PropTypes.string.isRequired,
+      username: PropTypes.string.isRequired,
+    }).isRequired,
     location: PropTypes.shape({
       city: PropTypes.string.isRequired,
       country: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
+  favPhotos: PropTypes.arrayOf(PropTypes.string).isRequired, // Prop for favPhotos
+  toggleLike: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default PhotoListItem;

@@ -1,15 +1,13 @@
 import React from 'react';
 import FavIcon from './FavIcon';
-import { useFavContext } from './FavContext'; // Import the useFavContext hook
+import { useFavContext } from './FavContext';
 
 import '../styles/FavBadge.scss';
 
 const FavBadge = () => {
-  // Access the context
-  const { likedPhotos } = useFavContext();
+  const { favPhotos } = useFavContext();
 
-  // Check if there are liked photos
-  const isFavPhotoExist = likedPhotos.length > 0;
+  const isFavPhotoExist = favPhotos && favPhotos.length > 0;
 
   return (
     <div className='fav-badge'>
