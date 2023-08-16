@@ -35,9 +35,9 @@ const PhotoDetailsModal = ({ photo, onClose, toggleLike }) => {
           {/* Add your images content here */}
         </div>
         <div className="photo-details-modal--favorite">
-          <button onClick={() => toggleLike(photo.id)}> {/* Use toggleLike from props */}
-            {isFav ? 'Remove from Favorites' : 'Add to Favorites'}
-          </button>
+        <button onClick={() => toggleLike(photo.id)}>
+               {isFav ? 'Remove from Favorites' : 'Add to Favorites'}
+        </button>
         </div>
       </div>
     </div>

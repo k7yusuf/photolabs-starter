@@ -1,25 +1,21 @@
 import React from 'react';
-import TopNavigationBar from '../components/TopNavigationBar'; // Import the TopNavigationBar component
-import PhotoList from '../components/PhotoList'; // Import the PhotoList component
-import TopicList from '../components/TopicList'; // Import the TopicList component
-import { FavProvider } from '../components/FavContext'; // Import the FavProvider
-import FavBadge from '../components/FavBadge'; // Import the FavBadge component
+import TopNavigationBar from '../components/TopNavigationBar';
+import PhotoList from '../components/PhotoList';
+import TopicList from '../components/TopicList';
+import { FavProvider } from '../components/FavContext';
+import FavBadge from '../components/FavBadge';
 import '../styles/HomeRoute.scss';
 
-const HomeRoute = () => {
-
-
-
-  
+const HomeRoute = ({ photoData, topicData }) => {
   return (
-    <FavProvider> {/* Wrap the components with the FavProvider */}
+    <FavProvider>
       <div className="home-route">
         <TopNavigationBar />
         <div className="home-route__content">
-          <TopicList />
-          <PhotoList />
+          <TopicList topics={topicData} /> 
+          <PhotoList photoData={photoData} />
         </div>
-        <FavBadge /> {/* Add the FavBadge component */}
+        <FavBadge />
       </div>
     </FavProvider>
   );
