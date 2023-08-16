@@ -6,7 +6,7 @@ const ACTIONS = {
   FAV_PHOTO_REMOVED: 'FAV_PHOTO_REMOVED',
   SET_PHOTO_DATA: 'SET_PHOTO_DATA',
   SET_TOPIC_DATA: 'SET_TOPIC_DATA',
-  TOGGLE_LIKE: 'TOGGLE_LIKE', // Add the new action type
+  TOGGLE_LIKE: 'TOGGLE_LIKE', 
   // Add more action types as needed
 };
 
@@ -64,8 +64,8 @@ export function useApplicationData() {
   const [state, dispatch] = useReducer(reducer, {
     favPhotoIds: [],
     selectedPhoto: null,
-    photoData: [], // Initial photo data
-    topicData: [], // Initial topic data
+    photoData: [], 
+    topicData: [], 
   });
 
   // Define your actions using the dispatch function

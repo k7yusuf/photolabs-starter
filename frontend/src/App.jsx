@@ -11,17 +11,22 @@ import './App.scss';
 const App = () => {
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [likes, setLikes] = useState(0);
-  const {
-    state,
-    updateToFavPhotoIds,
-    removeFavPhoto,
-    setPhotoData,
-    setTopicData,
-  } = useApplicationData();
+  const { state, setPhotoData, setTopicData } = useApplicationData();
 
   const toggleLike = (photoId) => {
     // Implement your toggle logic here
     // Update the favorite photo ids using updateToFavPhotoIds action
+  };
+
+  const fetchPhotosByTopic = (topicId) => {
+    fetch(`http://localhost:8001/api/topics/photos/${topicId}`)
+      .then(response => response.json())
+      .then(photoData => {
+        setPhotoData(photoData);
+      })
+      .catch(error => {
+        // Handle error if needed
+      });
   };
 
   const openModal = (photo) => {
@@ -71,11 +76,11 @@ const App = () => {
       <div className="App">
         <TopNavigationBar />
         <div className="home-route__content">
-          <TopicList topics={state.topicData} />
+          <TopicList fetchPhotosByTopic={fetchPhotosByTopic} />
           <HomeRoute photoData={state.photoData} topicData={state.topicData} />
           <PhotoList
             photos={state.photoData}
-            toggleLike={toggleLike} // Pass the toggleLike function
+            toggleLike={toggleLike} 
             openModal={openModal}
           />
         </div>
