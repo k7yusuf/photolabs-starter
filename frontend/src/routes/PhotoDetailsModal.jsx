@@ -4,10 +4,8 @@ import "styles/PhotoDetailsModal.scss";
 import PhotoList from "components/PhotoList";
 import PhotoFavButton from "components/PhotoFavButton";
 
-export const PhotoDetailsModal = (props) => {
-  const { photoDetails, closeModal, photoFavBtnClicked, favPhotoList } = props;
-  const { urls, similar_photos, id, location, user } = photoDetails;
-
+export const PhotoDetailsModal = ({ photoDetails:{ urls, similar_photos, id, location, user }, showModal, closeModal, photoFavBtnClicked, favPhotoList } ) => {
+  
   const photoIsFavorited = useMemo(() => {
     if (favPhotoList.includes(id)) return true
     return false
@@ -61,6 +59,7 @@ export const PhotoDetailsModal = (props) => {
       </div>
       <div className="photo-details-modal--similar-photos">
         <PhotoList
+          showModal={showModal}
           photoFavBtnClicked={photoFavBtnClicked}
           favPhotoList={favPhotoList}
           mockPhotos={Object.values(similar_photos)}

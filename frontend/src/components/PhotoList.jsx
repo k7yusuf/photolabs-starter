@@ -3,13 +3,12 @@ import React from "react";
 import "styles/PhotoList.scss";
 import PhotoListItem from "components/PhotoListItem";
 
-const PhotoList = (props) => {
-  const {
-    favPhotoList,
-    mockPhotos,
-    showModal,
-    photoFavBtnClicked,
-  } = props;
+const PhotoList = ({
+  favPhotoList,
+  mockPhotos,
+  showModal,
+  photoFavBtnClicked,
+}) => {
 
   const photoList = mockPhotos.map((photo) => {
     const { id, user, urls, location } = photo;

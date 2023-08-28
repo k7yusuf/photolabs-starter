@@ -39,7 +39,7 @@ const openModal = (state, action) => {
     const singlePhotoDetails = state.photos.find((item) => item.id === payload);
     state = {
       ...state,
-      isModalOpen: !state.isModalOpen,
+      isModalOpen: true,
       modalPhotoDetails: singlePhotoDetails,
     };
   }

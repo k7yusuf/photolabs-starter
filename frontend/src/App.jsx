@@ -33,6 +33,7 @@ const App = () => {
         />
         {state.isModalOpen && (
           <PhotoDetailsModal
+            showModal={showModal}
             closeModal={closeModal}
             photoDetails={state.modalPhotoDetails}
             photoFavBtnClicked={photoFavBtnClicked}

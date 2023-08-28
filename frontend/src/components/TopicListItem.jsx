@@ -24,7 +24,9 @@ const TopicListItem = (props) => {
     <>
       <div className="topic-list--item">
         {/* Insert React */}
-        <span onClick={() => getPhotos(id)}>{title}</span>
+        <a href="#" onClick={(e) => {
+          e.preventDefault()
+          getPhotos(id)}}>{title}</a>
       </div>
     </>
   );
