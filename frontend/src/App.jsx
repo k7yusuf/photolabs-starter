@@ -1,98 +1,46 @@
 import React, { useState, useEffect } from 'react';
-import { FavProvider } from './components/FavContext'; 
-import TopNavigationBar from './components/TopNavigationBar';
-import PhotoList from './components/PhotoList';
-import TopicList from './components/TopicList';
-import HomeRoute from './routes/HomeRoute';
-import PhotoDetailsModal from './routes/PhotoDetailsModal';
-import { useApplicationData } from './hooks/useApplicationData';
 import './App.scss';
+import axios from "axios"
+import HomeRoute from 'routes/HomeRoute';
+import PhotoDetailsModal from 'routes/PhotoDetailsModal';
+import  useApplicationData  from 'hooks/useApplicationData'; 
+
 
 const App = () => {
-  const [selectedPhoto, setSelectedPhoto] = useState(null);
-  const [likes, setLikes] = useState(0);
-  const { state, setPhotoData, setTopicData } = useApplicationData();
-
-  const toggleLike = (photoId) => {
-    // Implement your toggle logic here
-    // Update the favorite photo ids using updateToFavPhotoIds action
-  };
-
-  const fetchPhotosByTopic = (topicId) => {
-    fetch(`http://localhost:8001/api/topics/photos/${topicId}`)
-      .then(response => response.json())
-      .then(photoData => {
-        setPhotoData(photoData);
-      })
-      .catch(error => {
-        // Handle error if needed
-      });
-  };
-
-  const openModal = (photo) => {
-    setSelectedPhoto(photo);
-  };
-
-  const closeModal = () => {
-    setSelectedPhoto(null);
-  };
+  
+  const { state, photoFavBtnClicked, showModal, closeModal, setAppData, getTopicPhotos } =
+    useApplicationData();
 
   useEffect(() => {
-    document.body.className = `bg--${likes % 2}`;
-  }, [likes]);
+    const topicsApi = "http://localhost:8001/api/topics";
+    const photosApi = "http://localhost:8001/api/photos";
 
-  useEffect(() => {
-    if (likes > 0) {
-      const timeout = setTimeout(() => setLikes(prev => prev - 1), 1000);
-      return () => clearTimeout(timeout); 
-    }
-  }, [likes]);
-
-  useEffect(() => {
-    fetch('http://localhost:8001/api/photos')
-      .then(response => response.json())
-      .then(photoData => {
-        setPhotoData(photoData);
-      })
-      .catch(error => {
-        // Handle error if needed
-      });
-
-    fetch('http://localhost:8001/api/topics')
-      .then(response => response.json())
-      .then(topicData => {
-        setTopicData(topicData);
-      })
-      .catch(error => {
-        // Handle error if needed
-      });
-
-    // ... other side effects
-
-  }, [setPhotoData, setTopicData]);
-
+    Promise.all([axios.get(topicsApi), axios.get(photosApi)]).then((all) => {
+      const [topics, photos] = all;
+      setAppData(topics.data, photos.data);
+      console.log ("the value of the axios code",all) 
+    }).catch(err => console.log("An unexpected error occured", err))
+  }, []);
+  
   return (
-    <FavProvider>
+    <>
       <div className="App">
-        <TopNavigationBar />
-        <div className="home-route__content">
-          <TopicList fetchPhotosByTopic={fetchPhotosByTopic} />
-          <HomeRoute photoData={state.photoData} topicData={state.topicData} />
-          <PhotoList
-            photos={state.photoData}
-            toggleLike={toggleLike} 
-            openModal={openModal}
-          />
-        </div>
-        {selectedPhoto && (
+        <HomeRoute
+          state={state}
+          photoFavBtnClicked={photoFavBtnClicked}
+          showModal={showModal}
+          getTopicPhotos={getTopicPhotos}
+        />
+        {state.isModalOpen && (
           <PhotoDetailsModal
-            photo={selectedPhoto}
-            onClose={closeModal}
-            toggleLike={toggleLike}
+            closeModal={closeModal}
+            photoDetails={state.modalPhotoDetails}
+            photoFavBtnClicked={photoFavBtnClicked}
+            favPhotoList={state.favPhotoList}
           />
         )}
       </div>
-    </FavProvider>
+    </>
   );
 };
 

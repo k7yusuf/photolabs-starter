@@ -1,22 +1,35 @@
-import React from 'react';
-import PhotoList from '../components/PhotoList';
-import TopicList from '../components/TopicList';
-import { FavProvider } from '../components/FavContext';
-import FavBadge from '../components/FavBadge';
-import '../styles/HomeRoute.scss';
+import React from "react";
 
-const HomeRoute = ({ photoData, topicData }) => {
+import "styles/HomeRoute.scss";
+import TopNavigation from "components/TopNavigationBar";
+import PhotoList from "components/PhotoList";
+
+const HomeRoute = (props) => {
+  const {
+    state,
+    photoFavBtnClicked,
+    showModal,
+    getTopicPhotos
+  } = props;
+
   return (
-    <FavProvider>
+    <>
       <div className="home-route">
-        <div className="home-route__content">
-          <TopicList topics={topicData} /> 
-          <PhotoList photoData={photoData} />
-        </div>
-        <FavBadge />
+        {/* Insert React */}
+        <TopNavigation
+          favPhotoList={state.favPhotoList}
+          topics={state.topics}
+          getTopicPhotos={getTopicPhotos}
+        />
+        <PhotoList
+          mockPhotos={state.photos}
+          showModal={showModal}
+          favPhotoList={state.favPhotoList}
+          photoFavBtnClicked={photoFavBtnClicked}
+        />
       </div>
-    </FavProvider>
+    </>
   );
-}
+};
 
 export default HomeRoute;
