@@ -15,7 +15,6 @@ const HomeRoute = (props) => {
   return (
     <>
       <div className="home-route">
-        {/* Insert React */}
         <TopNavigation
           favPhotoList={state.favPhotoList}
           topics={state.topics}

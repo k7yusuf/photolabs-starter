@@ -23,10 +23,10 @@ const TopicListItem = (props) => {
   return (
     <>
       <div className="topic-list--item">
-        {/* Insert React */}
         <a href="#" onClick={(e) => {
           e.preventDefault()
-          getPhotos(id)}}>{title}</a>
+          getPhotos(id)
+        }}>{title}</a>
       </div>
     </>
   );

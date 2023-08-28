@@ -13,7 +13,6 @@ function PhotoFavButton(props) {
   return (
     <div className="photo-list--fav-icon" onClick={handleIsFavorited}>
       <div className="photo-list--fav-icon-svg">
-        {/* Insert React */}
         <FavIcon
           width={22}
           height={30}

@@ -15,7 +15,6 @@ const TopicList = (props) => {
   return (
     <>
       <div className="top-nav-bar--topic-list">
-        {/* Insert React */}
         {topicList}
         &nbsp;&nbsp;&nbsp;&nbsp;
         <FavBadge isFavPhotoExist={favPhotoList.length > 0 ? true : false} />

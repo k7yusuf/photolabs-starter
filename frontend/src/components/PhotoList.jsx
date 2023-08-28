@@ -28,7 +28,6 @@ const PhotoList = ({
 
   return (
     <>
-      {/* Insert React */}
       <ul className="photo-list">{photoList}</ul>
     </>
   );

@@ -4,7 +4,7 @@ import "styles/PhotoDetailsModal.scss";
 import PhotoList from "components/PhotoList";
 import PhotoFavButton from "components/PhotoFavButton";
 
-export const PhotoDetailsModal = ({ photoDetails:{ urls, similar_photos, id, location, user }, showModal, closeModal, photoFavBtnClicked, favPhotoList } ) => {
+export const PhotoDetailsModal = ({ photoDetails:{ urls, similar_photos, id}, showModal, closeModal, photoFavBtnClicked, favPhotoList } ) => {
   
   const photoIsFavorited = useMemo(() => {
     if (favPhotoList.includes(id)) return true

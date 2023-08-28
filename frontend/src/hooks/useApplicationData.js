@@ -17,7 +17,7 @@ export default function useApplicationData() {
     favPhotoList: [],
   };
 
-  
+
 
   const [state, dispatch] = useReducer(reducer, defaultState);
 
@@ -32,13 +32,13 @@ export default function useApplicationData() {
   const closeModal = () => {
     dispatch({ type: CLOSE_MODAL });
   };
-  
+
   const setAppData = (topics, photos) => {
-    dispatch({ type: SET_APPLICATION_DATA, payload: {topics, photos} });
+    dispatch({ type: SET_APPLICATION_DATA, payload: { topics, photos } });
   }
 
   const getTopicPhotos = (id) => {
-    dispatch({ type: GET_TOPIC_PHOTOS, payload: id})
+    dispatch({ type: GET_TOPIC_PHOTOS, payload: id })
   }
 
   return {
