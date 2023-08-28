@@ -1,24 +1,22 @@
-import React from 'react';
-import FavBadge from './FavBadge';
-import { useFavContext } from './FavContext';
-import '../styles/TopNavigationBar.scss';
+import React from "react";
 
-const TopNavigationBar = () => {
-  const { favPhotos } = useFavContext();
+import "styles/TopNavigationBar.scss";
+import TopicList from "components/TopicList";
 
+const TopNavigation = (props) => {
+  const { favPhotoList, topics, getTopicPhotos } = props;
   return (
-    <div className="top-nav-bar">
-      <span className="top-nav-bar__logo">PhotoLabs</span>
-      <div className="top-nav-bar__nav">
-        <FavBadge isFavPhotoExist={favPhotos.length > 0} />
-        {favPhotos.length > 0 && (
-          <div className="notification-badge">
-            <span className="notification-badge__text">You have liked photos</span>
-          </div>
-        )}
+    <>
+      <div className="top-nav-bar">
+        <span className="top-nav-bar--logo">PhotoLabs</span>
+        <TopicList
+          favPhotoList={favPhotoList}
+          topics={topics}
+          getTopicPhotos={getTopicPhotos}
+        />
       </div>
-    </div>
+    </>
   );
 };
 
-export default TopNavigationBar;
+export default TopNavigation;

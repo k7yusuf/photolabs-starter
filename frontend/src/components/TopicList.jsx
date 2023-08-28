@@ -1,48 +1,46 @@
-import React, { useContext } from "react";
-import TopicListItem from "./TopicListItem";
-import { FavContext } from "./FavContext";
-import "../styles/TopicList.scss";
+import React from "react";
 
-const sampleDataForTopicList = [
-  {
-    id: "1",
-    slug: "topic-1",
-    title: "Nature",
-  },
-  {
-    id: "2",
-    slug: "topic-2",
-    title: "Travel",
-  },
-  {
-    id: "3",
-    slug: "topic-3",
-    title: "People",
-  },
-  // ... other topics
-];
+import "styles/TopicList.scss";
+import TopicListItem from "components/TopicListItem";
+import FavBadge from "components/FavBadge";
 
-const TopicList = ({ setSelectedTopic }) => {
-  const { fetchPhotosByTopic } = useContext(FavContext); // Use the context
-
-  const handleTopicClick = (topic) => {
-    setSelectedTopic(topic); // Update the selected topic in the state
-    fetchPhotosByTopic(topic.id); // Call the function to fetch photos
-  };
+const TopicList = (props) => {
+  const { favPhotoList, topics, getTopicPhotos } = props;
+  const topicList = topics.map((topic, index) => {
+    return (
+      <TopicListItem key={index} {...topic} getTopicPhotos={getTopicPhotos} />
+    );
+  });
 
   return (
-    <div className="top-nav-bar__topic-list">
-      <ul>
-        {sampleDataForTopicList.map((topic) => (
-          <TopicListItem
-            key={topic.id}
-            topic={topic}
-            onClick={() => handleTopicClick(topic)} // Attach the onClick handler
-          />
-        ))}
-      </ul>
-    </div>
+    <>
+      <div className="top-nav-bar--topic-list">
+        {/* Insert React */}
+        {topicList}
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <FavBadge isFavPhotoExist={favPhotoList.length > 0 ? true : false} />
+      </div>
+    </>
   );
 };
 
+TopicList.defaultProps = {
+  topics: [
+    {
+      id: 1,
+      label: "Nature",
+      link: "link placeholder",
+    },
+    {
+      id: 2,
+      label: "Food",
+      link: "link placeholder",
+    },
+    {
+      id: 3,
+      label: "People",
+      link: "link placeholder",
+    },
+  ],
+};
 export default TopicList;

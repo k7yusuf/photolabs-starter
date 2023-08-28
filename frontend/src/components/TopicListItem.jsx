@@ -1,19 +1,38 @@
 import React from "react";
+import axios from "axios";
 
-import "../styles/TopicListItem.scss";
+import "styles/TopicListItem.scss";
 
-const sampleDataForTopicListItem = {
-  id: "1",
-  slug: "topic-1",
-  label: "Nature",
-};
+const TopicListItem = (props) => {
+  const { id, title, getTopicPhotos } = props;
 
-const TopicListItem = ({ topic }) => {
+  const getPhotos = (id) => {
+    axios
+      .get(`/api/topics/photos/${id}`)
+      .then((res) => {
+        getTopicPhotos(res.data);
+      })
+      .catch((err) =>
+        console.log(
+          "An unexpected error occured attempting to perform request.",
+          err
+        )
+      );
+  };
+
   return (
-    <li className="topic-list__item">
-      <span>{topic.label}</span>
-    </li>
+    <>
+      <div className="topic-list--item">
+        {/* Insert React */}
+        <span onClick={() => getPhotos(id)}>{title}</span>
+      </div>
+    </>
   );
 };
 
+TopicListItem.defaultProps = {
+  id: 1,
+  label: "Nature",
+  link: "link placeholder",
+};
 export default TopicListItem;
