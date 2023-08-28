@@ -1,58 +1,58 @@
-import React from "react";
-import PropTypes from "prop-types";
-import "../styles/PhotoListItem.scss";
+import React, { useMemo } from "react";
+
+import "styles/PhotoListItem.scss";
+import PhotoFavButton from "components/PhotoFavButton";
 
 const PhotoListItem = (props) => {
-  const { urls, user, location } = props.data;
-  const { favPhotos } = props;
+  /* Insert React */
+  const {
+    id,
+    user,
+    urls,
+    location,
+    favPhotoList,
+    photoFavBtnClicked,
+    showModal,
+  } = props;
 
-  const isPhotoLiked = favPhotos.includes(props.data.id);
-  const toggleFavorite = () => {
-    props.toggleLike(props.data.id);
-  };
+  const photoIsFavorited = useMemo(() => {
+    if (favPhotoList.includes(id)) return true
+    return false
+  }, [favPhotoList, id]);
 
   return (
-    <div className="photo-item" onClick={props.onClick}>
-      <img src={urls.regular} alt="Photo" className="photo-image" />
-      <div className="photo-details">
-        <div className="user-profile">
-          <img src={user.profile} alt="Profile" className="profile-image" />
-          <span className="username">{user.username}</span>
+    <>
+      <li className="photo-list--item">
+        <PhotoFavButton
+          id={id}
+          user={user}
+          favPhotoList={favPhotoList}
+          photoFavBtnClicked={photoFavBtnClicked}
+          photoIsFavorited={photoIsFavorited}
+        />
+        <img
+          src={urls.regular}
+          className={"photo-list--image"}
+          onClick={() => showModal(id)}
+        />
+        <div className="photo-list--user-details">
+          <img className="photo-list--user-profile" src={user.profile} />
+          <div className="photo-list--user-info">
+            <span className="photo-list--username">{user.username}</span>
+            <br />
+            <span className="photo-list--user-location">{`${location.city}, ${location.country}`}</span>
+          </div>
         </div>
-        <div className="location">
-          <span className="city">{location.city},</span>
-          <span className="country">{location.country}</span>
-        </div>
-      </div>
-      <div className="like-button">
-        <button onClick={toggleFavorite}>
-          <svg width="24" height="24" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-            {/* Your SVG heart code here */}
-          </svg>
-        </button>
-      </div>
-    </div>
+      </li>
+    </>
   );
 };
 
-PhotoListItem.propTypes = {
-  data: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    urls: PropTypes.shape({
-      regular: PropTypes.string.isRequired,
-    }).isRequired,
-    user: PropTypes.shape({
-      profile: PropTypes.string.isRequired,
-      username: PropTypes.string.isRequired,
-    }).isRequired,
-    location: PropTypes.shape({
-      city: PropTypes.string.isRequired,
-      country: PropTypes.string.isRequired,
-    }).isRequired,
-  }).isRequired,
-  favPhotos: PropTypes.arrayOf(PropTypes.string).isRequired,
-  toggleLike: PropTypes.func.isRequired,
-  onClick: PropTypes.func.isRequired,
+PhotoListItem.defaultProps = {
+  username: "Jacob",
+  imageSource: `${process.env.PUBLIC_URL}/Image.jpg`,
+  id: 1,
+  hideUserName: false,
 };
 
 export default PhotoListItem;

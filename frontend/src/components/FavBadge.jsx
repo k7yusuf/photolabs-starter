@@ -1,17 +1,17 @@
-import React from 'react';
-import FavIcon from './FavIcon';
-import { useFavContext } from './FavContext';
+import React from "react";
+import FavIcon from "./FavIcon";
 
-import '../styles/FavBadge.scss';
+import "styles/FavBadge.scss";
 
-const FavBadge = () => {
-  const { favPhotos } = useFavContext();
-
-  const isFavPhotoExist = favPhotos && favPhotos.length > 0;
-
+export const FavBadge = ({ isFavPhotoExist }) => {
   return (
-    <div className='fav-badge'>
-      <FavIcon displayAlert={isFavPhotoExist} />
+    <div className="fav-badge">
+      <FavIcon
+        width={20}
+        height={17}
+        fill="#C80000"
+        displayAlert={!!isFavPhotoExist}
+      />
     </div>
   );
 };

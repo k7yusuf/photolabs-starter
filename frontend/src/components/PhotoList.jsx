@@ -1,46 +1,61 @@
 import React from "react";
-import PhotoListItem from "./PhotoListItem";
-import PhotoDetailsModal from '../routes/PhotoDetailsModal';
-import { useFavContext } from './FavContext'; 
-import "../styles/PhotoList.scss";
-import {useState} from "react";
 
-const PhotoList = ({ photoData, toggleLike }) => {
-  const { favPhotos } = useFavContext(); 
-  const [selectedPhoto, setSelectedPhoto] = useState(null);
+import "styles/PhotoList.scss";
+import PhotoListItem from "components/PhotoListItem";
 
-  const openModal = (photo) => {
-    setSelectedPhoto(photo);
-  };
+const PhotoList = (props) => {
+  const {
+    favPhotoList,
+    mockPhotos,
+    showModal,
+    photoFavBtnClicked,
+  } = props;
 
-  const closeModal = () => {
-    setSelectedPhoto(null);
-  };
-  if (!photoData) {
-    return null; 
-  }
+  const photoList = mockPhotos.map((photo) => {
+    const { id, user, urls, location } = photo;
+    return (
+      <PhotoListItem
+        key={id}
+        id={id}
+        user={user}
+        location={location}
+        urls={urls}
+        showModal={showModal}
+        favPhotoList={favPhotoList}
+        photoFavBtnClicked={photoFavBtnClicked}
+      />
+    );
+  });
 
   return (
-    <div className="photo-list-container">
-      <ul className="photo-list">
-        {photoData.map((photo) => (
-          <PhotoListItem
-            key={photo.id}
-            data={photo}
-            favPhotos={favPhotos}
-            toggleLike={toggleLike} 
-            onClick={() => openModal(photo)}
-          />
-        ))}
-      </ul>
-      {selectedPhoto && (
-        <PhotoDetailsModal
-          photo={selectedPhoto}
-          onClose={closeModal}
-        />
-      )}
-    </div>
+    <>
+      {/* Insert React */}
+      <ul className="photo-list">{photoList}</ul>
+    </>
   );
+};
+
+PhotoList.defaultProps = {
+  photos: [
+    {
+      username: "Jacob",
+      imageSource: `${process.env.PUBLIC_URL}/Image.jpg`,
+      id: 1,
+      hideUserName: false,
+    },
+    {
+      username: "Jacob",
+      imageSource: `${process.env.PUBLIC_URL}/Image.jpg`,
+      id: 2,
+      hideUserName: false,
+    },
+    {
+      username: "Jacob",
+      imageSource: `${process.env.PUBLIC_URL}/Image.jpg`,
+      id: 3,
+      hideUserName: false,
+    },
+  ],
 };
 
 export default PhotoList;
